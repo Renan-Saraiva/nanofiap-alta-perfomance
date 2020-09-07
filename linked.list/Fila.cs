@@ -4,12 +4,12 @@ using System.Text;
 
 namespace linked.list
 {
-    public class Fila<T> : ILista<T>
+    public class Fila<T>
     {
         private ItemLista<T> Ultimo { get; set; }
         private ItemLista<T> Primeiro { get; set; }
 
-        public void Add(T dado)
+        public void EnQueue(T dado)
         {
             var item = new ItemLista<T>(dado);
 
@@ -27,6 +27,32 @@ namespace linked.list
             }
         }
 
+        public Tuple<bool, T> DeQueue()
+        {
+            if (!IsEmpty())
+            {
+                ItemLista<T> Saida = Primeiro;
+                Primeiro = Primeiro.Proximo;
+
+                if (object.ReferenceEquals(Saida, Ultimo))
+                    Ultimo = null;
+
+                return Tuple.Create<bool, T>(true, Saida.Dado);
+            }
+
+            return Tuple.Create<bool, T>(false, default(T));
+        }
+
+        public Tuple<bool, T> First()
+        {
+            if (IsEmpty())
+                return Tuple.Create<bool, T>(false, default(T));
+
+            return Tuple.Create<bool, T>(true, Primeiro.Dado);
+        }
+
+        public bool IsEmpty() => Primeiro is null;
+
         public void ImprimirTodos()
         {
             if (Primeiro is null)
@@ -38,12 +64,12 @@ namespace linked.list
             ImprimirItem(Primeiro, true);
         }
 
-        private void ImprimirItem(ItemLista<T> item, bool recursivo = false)
+        private void ImprimirItem(ItemLista<T> item, bool imprimirProximo = false)
         {
             Console.WriteLine($"Item fila impresso: {item.Dado}");
 
-            if (item.Proximo != null && recursivo)
-                ImprimirItem(item.Proximo, recursivo);
+            if (item.Proximo != null && imprimirProximo)
+                ImprimirItem(item.Proximo, imprimirProximo);
         }
 
         public void ProcessarTodos()
@@ -57,16 +83,16 @@ namespace linked.list
             Processar(Primeiro, true);
         }
 
-        public void Processar(ItemLista<T> item, bool processarProximo = false)
+        private void Processar(ItemLista<T> item, bool processarProximo = false)
         {
             Console.WriteLine($"Item fila processado: {item.Dado}");
 
             Primeiro = item.Proximo;
 
-            if (item.Equals(Ultimo))
+            if (object.ReferenceEquals(item, Ultimo))
                 Ultimo = null;
 
-            if (Primeiro != null && processarProximo)
+            if (IsEmpty() && processarProximo)
                 Processar(Primeiro, processarProximo);
         }
     }

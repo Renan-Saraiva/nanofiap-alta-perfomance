@@ -4,15 +4,15 @@ using System.Text;
 
 namespace linked.list
 {
-    public class Pilha<T> : ILista<T>
+    public class Pilha<T>
     {
         private ItemLista<T> Ultimo { get; set; }
 
-        public void Add(T dado) 
+        public void Push(T dado) 
         {
             var item = new ItemLista<T>(dado);
 
-            if (this.Ultimo is null)
+            if (IsEmpty())
                 this.Ultimo = item;
             else
             {
@@ -21,9 +21,31 @@ namespace linked.list
             }
         }
 
+        public Tuple<bool, T> Pop()
+        {
+            if (!IsEmpty()) 
+            {
+                ItemLista<T> Saida = Ultimo;
+                Ultimo = Ultimo.Proximo;
+                return Tuple.Create<bool, T>(true, Saida.Dado);
+            }
+
+            return Tuple.Create<bool, T>(false, default(T));
+        }
+
+        public Tuple<bool, T> Top()
+        {
+            if (IsEmpty())
+                return Tuple.Create<bool, T>(false, default(T));
+
+            return Tuple.Create<bool, T>(true, Ultimo.Dado);
+        }
+
+        public bool IsEmpty() => Ultimo is null;
+
         public void ImprimirTodos()
         {
-            if (Ultimo is null)
+            if (IsEmpty())
             {
                 Console.WriteLine($"Nenhum item a ser impresso");
                 return;
@@ -42,7 +64,7 @@ namespace linked.list
 
         public void ProcessarTodos()
         {
-            if (Ultimo is null) 
+            if (IsEmpty())
             {
                 Console.WriteLine($"Nenhum item a ser processado");
                 return;
@@ -51,13 +73,13 @@ namespace linked.list
             Processar(Ultimo, true);
         }
 
-        public void Processar(ItemLista<T> item, bool recursivo = false)
+        private void Processar(ItemLista<T> item, bool recursivo = false)
         {
             Console.WriteLine($"Item pilha processado: {item.Dado}");
 
             Ultimo = item.Proximo;
 
-            if (Ultimo != null && recursivo)
+            if (!IsEmpty() && recursivo)
                 Processar(Ultimo, recursivo);
         }
     }

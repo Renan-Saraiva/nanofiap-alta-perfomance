@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace linked.list
+﻿namespace linked.list
 {
     public interface ILista<T>
     {

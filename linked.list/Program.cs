@@ -7,49 +7,62 @@ namespace linked.list
         static void Main(string[] args)
         {
 
-            ILista<int> itemsPilha = new Pilha<int>();
+            Pilha<int> itemsPilha = new Pilha<int>();
 
-            itemsPilha.Add(1);
-            itemsPilha.Add(2);
-            itemsPilha.Add(3);
-            itemsPilha.Add(4);
-            itemsPilha.Add(5);
-            itemsPilha.Add(6);
-            itemsPilha.Add(7);
+            itemsPilha.Push(1);
+            itemsPilha.Push(2);
+            itemsPilha.Push(3);
+            itemsPilha.Push(4);
+            itemsPilha.Push(5);
+            itemsPilha.Push(6);
+            itemsPilha.Push(7);
 
-            Testar(itemsPilha);
+            itemsPilha.ImprimirTodos();
 
-            itemsPilha.Add(1);
-            itemsPilha.Add(2);
-            itemsPilha.Add(3);
+            itemsPilha.Pop();
+            itemsPilha.Pop();
+            itemsPilha.Pop();
 
-            Testar(itemsPilha);
+            itemsPilha.ImprimirTodos();
 
-            ILista<int> itemsFila = new Fila<int>();
+            itemsPilha.Pop();
+            itemsPilha.Pop();
+            itemsPilha.Pop();
+            itemsPilha.Pop();
+            itemsPilha.Pop();
 
-            itemsFila.Add(1);
-            itemsFila.Add(2);
-            itemsFila.Add(3);
-            itemsFila.Add(4);
-            itemsFila.Add(5);
-            itemsFila.Add(6);
-            itemsFila.Add(7);
+            itemsPilha.ImprimirTodos();
 
-            Testar(itemsFila);
+            Fila<int> itemsFila = new Fila<int>();
 
-            itemsFila.Add(1);
-            itemsFila.Add(2);
-            itemsFila.Add(3);
+            itemsFila.EnQueue(1);
+            itemsFila.EnQueue(2);
+            itemsFila.EnQueue(3);
+            itemsFila.EnQueue(4);
+            itemsFila.EnQueue(5);
+            itemsFila.EnQueue(6);
+            itemsFila.EnQueue(7);
 
-            Testar(itemsFila);
-        }
+            itemsFila.ImprimirTodos();
 
+            itemsFila.DeQueue();
+            itemsFila.DeQueue(); 
+            itemsFila.DeQueue();
+            itemsFila.DeQueue();
 
-        public static void Testar(ILista<int> items) 
-        {
-            items.ImprimirTodos();
-            items.ProcessarTodos();
-            items.ImprimirTodos();
+            itemsFila.ImprimirTodos();
+
+            itemsFila.DeQueue();
+            itemsFila.DeQueue();
+            itemsFila.DeQueue();
+            
+            itemsFila.ImprimirTodos();
+
+            itemsFila.EnQueue(1);
+            itemsFila.EnQueue(2);
+            itemsFila.EnQueue(3);
+
+            itemsFila.ImprimirTodos();
         }
     }
 }
